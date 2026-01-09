@@ -8,9 +8,28 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var historyView: UITextView!
     @IBOutlet weak var counterLabel: UILabel!
-    var counter = 0
+    private var counter = 0
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        counterLabel.text = "Значение счетчика: 0"
+        historyView.text = "История изменений: \n"
+        historyView.isEditable = false
+        historyView.isScrollEnabled = true
+    }
+    
+    
+    private func addToHistory(_ message: String)  {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date() )
+        historyView.text += " \(dateString): \(message)"
+        
+    }
     
     @IBAction func buttonPlusTap(_ sender: Any) {
         counter += 1
@@ -22,7 +41,7 @@ class ViewController: UIViewController {
         if counter > 0 {
             counter -= 1
             counterLabel.text = "Значние счетчика: \(counter)"
-         addToHistory("Значение изменено на -1")
+            addToHistory("Значение изменено на -1")
         } else {
             addToHistory( " попытка уменьшить значние счетчика ниже 0 ")
         }
@@ -33,25 +52,8 @@ class ViewController: UIViewController {
         counterLabel.text = "Значение счетчика: \(counter)"
         addToHistory(" Значение сброшено ")
     }
-
-    @IBOutlet weak var historyView: UITextView!
     
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        counterLabel.text = "Значение счетчика: 0"
-        historyView.text = "История изменений: \n"
-        historyView.isEditable = false
-        historyView.isScrollEnabled = true
-    }
-
-    func addToHistory(_ message: String)  {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
-        let dateString = dateFormatter.string(from: Date() )
-        historyView.text += " \(dateString): \(message)"
-     }
-
     
     
 }
